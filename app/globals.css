@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  /* Cores da Nova Identidade Juliana Monteiro */
+  --color-brand-orange: #ea580c; /* orange-600 */
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-400: #a1a1aa;
+  
+  /* Cor de fundo principal sincronizada */
+  --color-bg-main: #FFFCF9; 
+}
+
+:root {
+  --background: #FFFCF9;
+  --foreground: #09090b; /* zinc-950 */
+  
+  /* Sincronização com o Layout */
+  --font-inter: var(--font-inter);
+  --font-playfair: var(--font-playfair);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Classe utilitária para os títulos elegantes */
+.font-serif {
+  font-family: var(--font-playfair), serif;
+}
+
+/* Suavização de scroll para links internos da Navbar */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ajuste fino para seleções de texto */
+::selection {
+  background-color: #ea580c;
+  color: white;
+}
