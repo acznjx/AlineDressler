@@ -3,22 +3,25 @@ import { useState } from "react";
 import { Plus, Minus, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+/** * NOTA: As respostas abaixo são sugestões fictícias para apresentação do layout.
+ * Podem ser alteradas para refletir exatamente o seu método de trabalho.
+ */
 const perguntas = [
   {
-    q: "Como funciona a consulta inicial?",
-    a: "É um mapeamento completo. Analisamos sua bioquímica, rotina de sono, níveis de estresse e objetivos. Não entrego apenas uma dieta, mas um protocolo de estilo de vida desenhado para sua biologia única."
+    q: "Como funciona a nossa consulta?",
+    a: "Eu realizo um mapeamento completo. Analiso sua bioquímica e rotina para desenhar um protocolo de estilo de vida exclusivo para sua biologia. Não entrego apenas uma dieta, mas uma estratégia de performance."
   },
   {
-    q: "Em quanto tempo verei resultados?",
-    a: "Mudanças na clareza mental e energia costumam aparecer nos primeiros 7 a 10 dias. Resultados estéticos e metabólicos profundos são consolidados ao longo do primeiro protocolo de 90 dias."
+    q: "Em quanto tempo vejo resultados?",
+    a: "Geralmente, meus pacientes sentem melhora na energia e foco nos primeiros 10 dias. Resultados metabólicos e estéticos mais profundos são consolidados em nosso primeiro ciclo de 90 dias."
   },
   {
-    q: "O acompanhamento inclui suplementação?",
-    a: "Sim. Se houver necessidade baseada em exames ou objetivos de performance (biohacking), prescrevo suplementação personalizada com foco em otimizar sua função cognitiva e física."
+    q: "O plano inclui suplementação?",
+    a: "Sim. Caso eu identifique necessidade através dos seus exames, prescrevo suplementação personalizada focada em otimizar sua performance física e cognitiva."
   },
   {
-    q: "Atende online ou apenas presencial?",
-    a: "Atendo em ambos os formatos. A consulta online tem a mesma profundidade e eficácia, utilizando plataformas seguras que permitem o acompanhamento de pacientes em qualquer lugar do mundo."
+    q: "Atende online ou presencial?",
+    a: "Atendo em ambos os formatos. Minha consulta online possui a mesma profundidade, permitindo que eu acompanhe sua evolução de qualquer lugar do mundo com total suporte."
   }
 ];
 
@@ -26,49 +29,43 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-24 lg:py-32 bg-[#FFFCF9] px-6">
+    <section id="faq" className="py-20 lg:py-32 bg-white dark:bg-[#0a0a0a] px-6 transition-colors duration-500">
       <div className="max-w-3xl mx-auto">
         
-        {/* CABEÇALHO SUTIL */}
-        <div className="text-center mb-20 space-y-4">
-          <div className="flex justify-center items-center gap-2 text-orange-600 mb-2">
-            <HelpCircle size={18} />
-            <span className="text-[10px] uppercase tracking-[0.4em] font-black">Esclarecimentos</span>
+        <div className="text-center mb-16 space-y-4">
+          <div className="flex justify-center items-center gap-2 text-emerald-600">
+            <HelpCircle size={16} />
+            <span className="text-[10px] uppercase tracking-[0.3em] font-black">Suporte</span>
           </div>
-          <h2 className="text-5xl md:text-6xl font-serif text-zinc-900 tracking-tighter">
-            Dúvidas <span className="italic font-light text-orange-600">frequentes.</span>
+          <h2 className="text-4xl md:text-6xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter leading-none">
+            Dúvidas <span className="italic font-serif font-light text-emerald-600 lowercase">frequentes.</span>
           </h2>
         </div>
         
-        {/* LISTA DE ACCORDIONS */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {perguntas.map((item, i) => (
             <div 
               key={i} 
-              className={`transition-all duration-500 rounded-3xl border ${
+              className={`transition-all duration-300 rounded-2xl border ${
                 openIndex === i 
-                  ? "bg-white border-zinc-200 shadow-xl shadow-zinc-200/20" 
-                  : "bg-transparent border-transparent hover:border-zinc-200"
+                  ? "bg-zinc-50 dark:bg-white/5 border-emerald-500/20" 
+                  : "bg-transparent border-zinc-100 dark:border-white/5"
               }`}
             >
               <button 
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full px-6 py-7 md:px-8 md:py-8 text-left flex justify-between items-center group"
+                className="w-full px-5 py-6 md:px-8 text-left flex justify-between items-start gap-4"
               >
-                <span className={`text-lg md:text-xl font-serif transition-colors duration-300 ${
-                  openIndex === i ? "text-zinc-900" : "text-zinc-600 group-hover:text-zinc-900"
+                <span className={`text-base md:text-lg font-bold uppercase tracking-tight leading-tight ${
+                  openIndex === i ? "text-emerald-600 dark:text-emerald-400" : "text-zinc-700 dark:text-zinc-300"
                 }`}>
                   {item.q}
                 </span>
-                <div className={`flex-shrink-0 transition-all duration-500 ${openIndex === i ? "rotate-180 scale-110" : "rotate-0"}`}>
+                <div className="shrink-0 mt-1">
                   {openIndex === i ? (
-                    <div className="p-2 bg-orange-600 rounded-full shadow-lg shadow-orange-600/20">
-                      <Minus size={18} className="text-white" />
-                    </div>
+                    <Minus size={18} className="text-emerald-600" />
                   ) : (
-                    <div className="p-2 bg-zinc-100 rounded-full group-hover:bg-zinc-200">
-                      <Plus size={18} className="text-zinc-400" />
-                    </div>
+                    <Plus size={18} className="text-zinc-400" />
                   )}
                 </div>
               </button>
@@ -79,10 +76,9 @@ export function Faq() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden"
+                    transition={{ duration: 0.3 }}
                   >
-                    <div className="px-8 pb-8 text-zinc-500 font-light leading-relaxed text-base md:text-lg max-w-[95%]">
+                    <div className="px-5 pb-6 md:px-8 text-zinc-500 dark:text-zinc-400 text-sm md:text-base leading-relaxed font-medium">
                       {item.a}
                     </div>
                   </motion.div>
@@ -92,12 +88,11 @@ export function Faq() {
           ))}
         </div>
 
-        {/* CTA FINAL SUTIL */}
-        <div className="mt-16 text-center">
-          <p className="text-zinc-400 text-[11px] font-bold uppercase tracking-widest">
+        <div className="mt-12 text-center">
+          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest">
             Ainda tem dúvidas? 
-            <a href="#contato" className="ml-2 text-zinc-900 border-b border-orange-500/30 hover:text-orange-600 hover:border-orange-600 transition-all">
-              Fale comigo diretamente.
+            <a href="#contato" className="ml-2 text-zinc-900 dark:text-white border-b border-emerald-500/50 hover:text-emerald-600 transition-all">
+              Me chame agora.
             </a>
           </p>
         </div>

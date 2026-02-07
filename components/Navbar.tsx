@@ -1,86 +1,86 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Menu, X, Flame } from "lucide-react"; // Flame combina melhor com a paleta quente
-import { motion, AnimatePresence } from "framer-motion";
+import { Leaf, Sun, Moon } from "lucide-react"; 
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
+    const isDarkTheme = document.documentElement.classList.contains("dark");
+    setIsDark(isDarkTheme);
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const toggleTheme = () => {
+    const html = document.documentElement;
+    setIsDark((prev) => {
+      const newDark = !prev;
+      if (newDark) {
+        html.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      } else {
+        html.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+      }
+      return newDark;
+    });
+  };
+
   const navLinks = [
     { name: "A Nutri", href: "#sobre" },
-    { name: "Método", href: "#metodo" },
     { name: "Resultados", href: "#resultados" },
+    { name: "Dúvidas", href: "#faq" },
   ];
 
   return (
-    <nav className={`fixed w-full z-[100] top-0 transition-all duration-500 ${
-      scrolled ? "bg-white/90 backdrop-blur-md py-4 shadow-sm" : "bg-transparent py-8"
+    <nav className={`fixed w-full z-100 top-0 transition-all duration-500 ${
+      scrolled 
+        ? "bg-white/90 dark:bg-bg-main/90 backdrop-blur-md py-4 md:py-5 shadow-sm" 
+        : "bg-transparent py-6 md:py-10"
     }`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        
-        <div className="flex items-center gap-2 group cursor-pointer">
-          <div className="w-9 h-9 bg-orange-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-orange-200">
-            <Flame size={20} fill="currentColor" />
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
+        <div className="flex items-center gap-2 md:gap-3 cursor-pointer">
+          <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-black">
+            <Leaf size={22} fill="currentColor" />
           </div>
-          <span className="text-xl font-serif tracking-tighter text-zinc-900 font-bold uppercase">
-            Juliana<span className="text-orange-600 italic font-light lowercase">monteiro</span>
+          <span className={`text-xl md:text-3xl font-serif tracking-tighter font-bold uppercase transition-colors duration-500 ${
+            isDark ? "text-white" : "text-zinc-950"
+          }`}>
+            Aline<span className="text-emerald-500 italic font-light lowercase px-1">dressler</span>
           </span>
         </div>
 
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-10">
-          <div className="flex gap-8">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href} 
-                className="text-[11px] uppercase tracking-[0.2em] font-bold text-zinc-500 hover:text-orange-600 transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-          <a 
-            href="#contato" 
-            className="bg-zinc-900 text-white px-7 py-3.5 rounded-full text-[10px] uppercase tracking-widest font-black hover:bg-orange-600 transition-all shadow-lg hover:shadow-orange-200 active:scale-95"
-          >
-            Agendar Consulta
-          </a>
+          {navLinks.map((link) => (
+            <a 
+              key={link.name} 
+              href={link.href} 
+              className={`text-xs uppercase tracking-[0.25em] font-black transition-colors duration-500 ${
+                isDark ? "text-zinc-400 hover:text-emerald-400" : "text-zinc-600 hover:text-emerald-600"
+              }`}
+            >
+              {link.name}
+            </a>
+          ))}
         </div>
 
-        {/* Mobile Toggle */}
-        <button className="md:hidden text-zinc-900" onClick={() => setIsOpen(true)}>
-          <Menu size={28} />
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 bg-zinc-50 z-[200] p-8 flex flex-col"
+        <div className="flex items-center gap-2 md:gap-6 md:border-l border-zinc-200 dark:border-white/10 md:pl-10 transition-colors">
+          <button 
+            onClick={toggleTheme} 
+            className={`p-3 transition-all duration-500 ${
+              isDark ? "text-zinc-400 hover:text-white" : "text-zinc-500 hover:text-zinc-950"
+            }`}
           >
-            <div className="flex justify-end">
-              <button onClick={() => setIsOpen(false)} className="p-2 text-zinc-900"><X size={35}/></button>
-            </div>
-            <div className="flex flex-col gap-6 mt-12">
-              {navLinks.map((link) => (
-                <a key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="text-5xl font-serif italic text-zinc-900">{link.name}</a>
-              ))}
-              <a href="#contato" onClick={() => setIsOpen(false)} className="text-2xl font-black uppercase text-orange-600 mt-4">Agendar Agora</a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <a href="#contato" className="bg-emerald-500 text-black px-6 md:px-10 py-3.5 md:py-4 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest hover:scale-105 transition-all">
+            Falar com a Nutri
+          </a>
+        </div>
+      </div>
     </nav>
   );
 }

@@ -1,39 +1,38 @@
+"use client";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
-import { Servicos } from "@/components/Services";
-import { Results } from "@/components/Results"; // Nova Importação
+import { Results } from "@/components/Results";
 import { Faq } from "@/components/Faq";
 import { Contact } from "@/components/Contact";
 import { WhatsappButton } from "@/components/WhatsappButton";
 
 export default function Home() {
   return (
-    /* Alterado para bg-[#FFFCF9] para manter a consistência total */
-    <main className="relative bg-[#FFFCF9]">
-      {/* Componente de Navegação */}
+    /* Ajustado para transição suave entre claro/escuro. 
+       O 'selection' define a cor de destaque quando o usuário seleciona um texto.
+    */
+    <main className="relative min-h-screen bg-white dark:bg-[#0a0a0a] transition-colors duration-500 selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-100">
+      
+      {/* Navegação Fixa */}
       <Navbar />
       
-      {/* Seção de Impacto Inicial */}
-      <Hero />
+      {/* Conteúdo em Blocos */}
+      <div className="flex flex-col w-full">
+        <Hero />
+        
+        <About />
+        
+        <Results />
+        
+        <Faq />
+        
+        <Contact />
+      </div>
       
-      {/* Seção Sobre a Profissional */}
-      <About />
-      
-      {/* Seção de Metodologia e Serviços */}
-      <Servicos />
-
-      {/* Seção de Prova Social e Métricas de Sucesso */}
-      <Results />
-      
-      {/* Seção de Dúvidas Frequentes */}
-      <Faq />
-      
-      {/* Seção de Contato (Já inclui o Footer Integrado) */}
-      <Contact />
-      
-      {/* Botão Flutuante de Ação Rápida */}
+      {/* Acessibilidade e Suporte */}
       <WhatsappButton />
+      
     </main>
   );
 }
