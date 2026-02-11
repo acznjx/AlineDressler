@@ -3,25 +3,26 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-brand-emerald: #059669;
-  --color-brand-emerald-light: #10b981;
-  --color-zinc-950: #09090b;
-  --color-zinc-900: #121214;
-  --color-zinc-800: #18181b;
-  --color-zinc-400: #a1a1aa;
-  --color-bg-main: #0a0a0a;
+  --color-brand-gold: #c5a37d;      
+  --color-brand-navy: #0a141f;
+  
+  --color-zinc-950: #0a141f;
+  --color-zinc-900: #0f1a26;
+  --color-zinc-800: #1a2633;
+  --color-zinc-400: #94a3b8;
+  --color-bg-main: #0a141f;
 }
 
 :root {
   --background: #ffffff;
-  --foreground: #09090b;
+  --foreground: #0a141f;
   --font-inter: var(--font-inter);
   --font-playfair: var(--font-playfair);
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #f4f4f5;
+  --background: #0a141f;
+  --foreground: #f8fafc;
 }
 
 body {
@@ -52,6 +53,6 @@ html {
 }
 
 ::selection {
-  background-color: #059669;
-  color: white;
+  background-color: #c5a37d;
+  color: #0a141f;
 }

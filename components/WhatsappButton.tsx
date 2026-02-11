@@ -5,28 +5,32 @@ import { MessageCircle } from "lucide-react";
 export function WhatsappButton() {
   return (
     <motion.a
-      href="https://wa.me/555192829482"
+      href="https://wa.me/5585988781031"
       target="_blank"
       rel="noopener noreferrer"
-      initial={{ scale: 0, opacity: 0, y: 20 }}
-      animate={{ scale: 1, opacity: 1, y: 0 }}
-      transition={{ delay: 1.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className="fixed bottom-6 right-6 lg:bottom-10 lg:right-10 z-50 flex items-center group"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 2, duration: 1, ease: "easeOut" }}
+      whileHover={{ y: -5 }}
+      whileTap={{ scale: 0.9 }}
+      className="fixed bottom-6 right-6 lg:bottom-12 lg:right-12 z-50 flex items-center group"
     >
-      {/* Tooltip Profissional - Adaptado para modo claro/escuro */}
-      <span className="mr-4 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[10px] uppercase tracking-[0.3em] px-6 py-3 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0 font-black shadow-2xl pointer-events-none border border-zinc-200 dark:border-white/10 hidden md:block">
-        Falar com Aline
+      {/* Tooltip Minimalista: Ajustado para ambos os temas */}
+      <span className="mr-4 bg-zinc-900/80 dark:bg-white/10 backdrop-blur-md text-white text-[9px] uppercase tracking-[0.4em] px-5 py-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 translate-x-2 group-hover:translate-x-0 pointer-events-none border border-white/10 hidden md:block font-light">
+        Olá, Jéssika
       </span>
 
       <div className="relative flex items-center justify-center">
-        {/* Efeito de Pulso Sutil */}
-        <span className="absolute inset-0 rounded-2xl bg-emerald-500 animate-ping opacity-20" />
+        {/* Aura de Brilho Sutil */}
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
+          transition={{ duration: 4, repeat: Infinity }}
+          className="absolute inset-0 rounded-full bg-brand-gold blur-xl" 
+        />
         
-        {/* Botão Principal - Troca de cores sincronizada */}
-        <div className="relative z-10 bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black p-4 lg:p-5 rounded-2xl shadow-xl shadow-emerald-900/20 transition-all duration-500 group-hover:bg-zinc-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black">
-          <MessageCircle size={28} strokeWidth={1.5} />
+        {/* Botão Principal */}
+        <div className="relative z-10 bg-brand-gold text-brand-navy p-4 lg:p-5 rounded-full shadow-[0_15px_40px_rgba(197,165,114,0.3)] transition-all duration-700 group-hover:bg-zinc-900 group-hover:text-brand-gold dark:group-hover:bg-white dark:group-hover:text-brand-navy">
+          <MessageCircle size={24} strokeWidth={1.2} />
         </div>
       </div>
     </motion.a>

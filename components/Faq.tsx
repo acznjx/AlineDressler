@@ -3,25 +3,22 @@ import { useState } from "react";
 import { Plus, Minus, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/** * NOTA: As respostas abaixo são sugestões fictícias para apresentação do layout.
- * Podem ser alteradas para refletir exatamente o seu método de trabalho.
- */
 const perguntas = [
   {
-    q: "Como funciona a nossa consulta?",
-    a: "Eu realizo um mapeamento completo. Analiso sua bioquímica e rotina para desenhar um protocolo de estilo de vida exclusivo para sua biologia. Não entrego apenas uma dieta, mas uma estratégia de performance."
+    q: "O que é a revisão de contrato bancário?",
+    a: "É uma análise técnica detalhada das cláusulas do seu contrato para identificar taxas abusivas, juros capitalizados ilegalmente e encargos que ferem o Código de Defesa do Consumidor, visando a redução do saldo devedor."
   },
   {
-    q: "Em quanto tempo vejo resultados?",
-    a: "Geralmente, meus pacientes sentem melhora na energia e foco nos primeiros 10 dias. Resultados metabólicos e estéticos mais profundos são consolidados em nosso primeiro ciclo de 90 dias."
+    q: "Como impedir a busca e apreensão de veículos?",
+    a: "Através de medidas liminares e defesas estratégicas fundamentadas em irregularidades na notificação ou no contrato, é possível manter a posse do bem enquanto discutimos o equilíbrio financeiro da dívida em juízo."
   },
   {
-    q: "O plano inclui suplementação?",
-    a: "Sim. Caso eu identifique necessidade através dos seus exames, prescrevo suplementação personalizada focada em otimizar sua performance física e cognitiva."
+    q: "A consultoria atende em todo o Brasil?",
+    a: "Sim. Graças à digitalização do sistema jurídico brasileiro, nossa atuação é 100% online, permitindo representar seus interesses em qualquer estado com a mesma eficiência e rigor técnico."
   },
   {
-    q: "Atende online ou presencial?",
-    a: "Atendo em ambos os formatos. Minha consulta online possui a mesma profundidade, permitindo que eu acompanhe sua evolução de qualquer lugar do mundo com total suporte."
+    q: "Quais documentos são necessários para análise?",
+    a: "Inicialmente, precisamos do contrato bancário (ou número do contrato), extratos de pagamento e seus documentos pessoais. Caso não possua o contrato, orientamos como solicitá-lo formalmente à instituição."
   }
 ];
 
@@ -29,43 +26,45 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-20 lg:py-32 bg-white dark:bg-[#0a0a0a] px-6 transition-colors duration-500">
+    <section id="faq" className="py-20 lg:py-32 bg-white dark:bg-[#020a13] px-6 border-t border-zinc-100 dark:border-white/5 transition-colors duration-500">
       <div className="max-w-3xl mx-auto">
         
+        {/* CABEÇALHO */}
         <div className="text-center mb-16 space-y-4">
-          <div className="flex justify-center items-center gap-2 text-emerald-600">
+          <div className="flex justify-center items-center gap-2 text-brand-gold">
             <HelpCircle size={16} />
-            <span className="text-[10px] uppercase tracking-[0.3em] font-black">Suporte</span>
+            <span className="text-[10px] uppercase tracking-[0.4em] font-bold">Consultoria</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter leading-none">
-            Dúvidas <span className="italic font-serif font-light text-emerald-600 lowercase">frequentes.</span>
+          <h2 className="text-4xl md:text-6xl font-light text-zinc-900 dark:text-white uppercase tracking-tight leading-none">
+            Dúvidas <span className="italic font-serif text-brand-gold">Frequentes.</span>
           </h2>
         </div>
         
-        <div className="space-y-3">
+        {/* LISTA DE ACORDEÃO */}
+        <div className="space-y-4">
           {perguntas.map((item, i) => (
             <div 
               key={i} 
-              className={`transition-all duration-300 rounded-2xl border ${
+              className={`transition-all duration-500 border-b ${
                 openIndex === i 
-                  ? "bg-zinc-50 dark:bg-white/5 border-emerald-500/20" 
-                  : "bg-transparent border-zinc-100 dark:border-white/5"
+                  ? "border-brand-gold/50 bg-zinc-50/50 dark:bg-white/2" 
+                  : "border-zinc-100 dark:border-white/10 bg-transparent"
               }`}
             >
               <button 
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full px-5 py-6 md:px-8 text-left flex justify-between items-start gap-4"
+                className="w-full py-7 text-left flex justify-between items-center gap-6"
               >
-                <span className={`text-base md:text-lg font-bold uppercase tracking-tight leading-tight ${
-                  openIndex === i ? "text-emerald-600 dark:text-emerald-400" : "text-zinc-700 dark:text-zinc-300"
+                <span className={`text-sm md:text-base font-bold uppercase tracking-widest transition-colors duration-300 ${
+                  openIndex === i ? "text-brand-gold" : "text-zinc-600 dark:text-zinc-400"
                 }`}>
                   {item.q}
                 </span>
-                <div className="shrink-0 mt-1">
+                <div className="shrink-0">
                   {openIndex === i ? (
-                    <Minus size={18} className="text-emerald-600" />
+                    <Minus size={18} className="text-brand-gold" />
                   ) : (
-                    <Plus size={18} className="text-zinc-400" />
+                    <Plus size={18} className="text-zinc-300 dark:text-white/20" />
                   )}
                 </div>
               </button>
@@ -76,9 +75,9 @@ export function Faq() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
                   >
-                    <div className="px-5 pb-6 md:px-8 text-zinc-500 dark:text-zinc-400 text-sm md:text-base leading-relaxed font-medium">
+                    <div className="pb-8 text-zinc-600 dark:text-zinc-500 text-sm md:text-base font-light leading-relaxed italic border-l border-brand-gold/30 ml-1 pl-6">
                       {item.a}
                     </div>
                   </motion.div>
@@ -88,11 +87,15 @@ export function Faq() {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest">
-            Ainda tem dúvidas? 
-            <a href="#contato" className="ml-2 text-zinc-900 dark:text-white border-b border-emerald-500/50 hover:text-emerald-600 transition-all">
-              Me chame agora.
+        {/* FOOTER DO FAQ */}
+        <div className="mt-16 text-center">
+          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em]">
+            Necessita de uma análise específica? 
+            <a 
+              href="https://wa.me/5585988781031" 
+              className="ml-3 text-brand-gold border-b border-brand-gold/30 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-900 dark:hover:border-white transition-all pb-1"
+            >
+              Fale com a Dra. Jéssika agora.
             </a>
           </p>
         </div>

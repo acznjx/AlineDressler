@@ -1,86 +1,93 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Leaf, Sun, Moon } from "lucide-react"; 
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { Sun, Moon, Instagram, MessageCircle } from "lucide-react";
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
+  // Correção para evitar o erro de "cascading renders" e hidratação
   useEffect(() => {
-    const isDarkTheme = document.documentElement.classList.contains("dark");
-    setIsDark(isDarkTheme);
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    setMounted(true);
   }, []);
 
-  const toggleTheme = () => {
-    const html = document.documentElement;
-    setIsDark((prev) => {
-      const newDark = !prev;
-      if (newDark) {
-        html.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-      } else {
-        html.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-      }
-      return newDark;
-    });
-  };
-
   const navLinks = [
-    { name: "A Nutri", href: "#sobre" },
-    { name: "Resultados", href: "#resultados" },
-    { name: "Dúvidas", href: "#faq" },
+    { name: "Início", href: "#inicio" },
+    { name: "Sobre", href: "#sobre" },
+    { name: "Serviços", href: "#servicos" },
+    { name: "Contato", href: "#contato" },
   ];
 
   return (
-    <nav className={`fixed w-full z-100 top-0 transition-all duration-500 ${
-      scrolled 
-        ? "bg-white/90 dark:bg-bg-main/90 backdrop-blur-md py-4 md:py-5 shadow-sm" 
-        : "bg-transparent py-6 md:py-10"
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
-        <div className="flex items-center gap-2 md:gap-3 cursor-pointer">
-          <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-black">
-            <Leaf size={22} fill="currentColor" />
-          </div>
-          <span className={`text-xl md:text-3xl font-serif tracking-tighter font-bold uppercase transition-colors duration-500 ${
-            isDark ? "text-white" : "text-zinc-950"
-          }`}>
-            Aline<span className="text-emerald-500 italic font-light lowercase px-1">dressler</span>
-          </span>
+    <header className="absolute top-0 left-0 w-full z-50">
+      <div className="bg-white/80 dark:bg-[#020a13]/90 backdrop-blur-lg h-20 md:h-28 px-4 sm:px-8 md:px-12 lg:px-20 flex items-center justify-between border-b border-black/5 dark:border-white/10 relative transition-all duration-500">
+        
+        {/* ESQUERDA: Logo */}
+        <div className="flex flex-col items-start shrink-0 text-left">
+          <h1 className="text-zinc-900 dark:text-white text-base sm:text-lg md:text-2xl font-serif tracking-[0.2em] sm:tracking-[0.4em] uppercase font-light leading-none">
+            Jéssika <span className="font-bold">Mourão</span>
+          </h1>
+          {/* Ajuste sugerido pelo Tailwind v4: max-w-15 */}
+          <div className="h-px w-8 sm:w-full max-w-15 bg-black/10 dark:bg-white/20 my-1.5 md:my-2" />
+          <p className="text-zinc-500 dark:text-white/40 text-[7px] sm:text-[9px] tracking-[0.3em] uppercase">
+            Advocacia Estratégica
+          </p>
         </div>
 
-        <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => (
+        {/* DIREITA: Navegação + Ícones */}
+        <div className="flex items-center gap-4 sm:gap-6 md:gap-10">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-10">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-medium text-zinc-600 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors whitespace-nowrap"
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3 sm:gap-5 border-l border-black/10 dark:border-white/10 pl-4 sm:pl-8">
             <a 
-              key={link.name} 
-              href={link.href} 
-              className={`text-xs uppercase tracking-[0.25em] font-black transition-colors duration-500 ${
-                isDark ? "text-zinc-400 hover:text-emerald-400" : "text-zinc-600 hover:text-emerald-600"
-              }`}
+              href="https://www.instagram.com/jessika.mourao.adv/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Instagram"
             >
-              {link.name}
+              <Instagram 
+                size={18} 
+                className="text-zinc-500 dark:text-white/60 hover:text-brand-gold transition-colors cursor-pointer shrink-0" 
+              />
             </a>
-          ))}
-        </div>
 
-        <div className="flex items-center gap-2 md:gap-6 md:border-l border-zinc-200 dark:border-white/10 md:pl-10 transition-colors">
-          <button 
-            onClick={toggleTheme} 
-            className={`p-3 transition-all duration-500 ${
-              isDark ? "text-zinc-400 hover:text-white" : "text-zinc-500 hover:text-zinc-950"
-            }`}
-          >
-            {isDark ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          <a href="#contato" className="bg-emerald-500 text-black px-6 md:px-10 py-3.5 md:py-4 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest hover:scale-105 transition-all">
-            Falar com a Nutri
-          </a>
+            {/* BOTÃO DE TROCA DE TEMA */}
+            <button 
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")} 
+              className="text-zinc-500 dark:text-white/60 hover:text-brand-gold transition-colors shrink-0 p-1 flex items-center justify-center min-w-8"
+              aria-label="Trocar Tema"
+            >
+              {/* Só renderiza o ícone após o 'mounted' para evitar erro de hidratação */}
+              {mounted ? (
+                theme === "dark" ? <Sun size={18} /> : <Moon size={18} />
+              ) : (
+                <div className="w-[18px] h-[18px]" /> 
+              )}
+            </button>
+
+            <a 
+              href="https://wa.me/5585988781031" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-500 dark:text-white/60 hover:text-[#25D366] transition-colors shrink-0 p-1"
+              aria-label="WhatsApp"
+            >
+              <MessageCircle size={18} />
+            </a>
+          </div>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }

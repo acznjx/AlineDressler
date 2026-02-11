@@ -9,15 +9,9 @@ import { WhatsappButton } from "@/components/WhatsappButton";
 
 export default function Home() {
   return (
-    /* Ajustado para transição suave entre claro/escuro. 
-       O 'selection' define a cor de destaque quando o usuário seleciona um texto.
-    */
-    <main className="relative min-h-screen bg-white dark:bg-[#0a0a0a] transition-colors duration-500 selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-100">
-      
-      {/* Navegação Fixa */}
+    <main className="relative min-h-screen bg-white dark:bg-[#0a141f] transition-colors duration-500 selection:bg-[#c5a37d]/30 selection:text-[#0a141f] dark:selection:text-[#c5a37d]">
       <Navbar />
       
-      {/* Conteúdo em Blocos */}
       <div className="flex flex-col w-full">
         <Hero />
         
@@ -30,9 +24,7 @@ export default function Home() {
         <Contact />
       </div>
       
-      {/* Acessibilidade e Suporte */}
       <WhatsappButton />
-      
     </main>
   );
 }
