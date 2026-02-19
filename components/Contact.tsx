@@ -1,156 +1,106 @@
 "use client";
-import { motion, Variants } from "framer-motion";
-import { MessageSquare, Mail, Instagram, ArrowRight, ShieldCheck, MapPin } from "lucide-react";
+import { MessageSquare, MapPin, HardHat, Mail, Phone } from "lucide-react";
 
 export function Contact() {
-  const variants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
-    }
-  };
-
-  const socialLinks = [
-    { 
-      icon: <Instagram size={20} />, 
-      label: "Instagram", 
-      value: "@jessika.mourao.adv", 
-      href: "https://www.instagram.com/jessika.mourao.adv/" 
-    },
-    { 
-      icon: <Mail size={20} />, 
-      label: "E-mail", 
-      value: "contato@jessikamourao.adv.br", 
-      href: "mailto:contato@jessikamourao.adv.br" 
-    }
-  ];
+  // Real Google Maps Embed URL for 55 Water St, Brooklyn, NY
+  const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.54415336357!2d-73.9934386!3d40.703816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a308678096b%3A0x6e2671542f7e0e7!2s55%20Water%20St%2C%20Brooklyn%2C%20NY%2011201!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus";
 
   return (
-    <section id="contato" className="relative py-20 lg:py-44 bg-white dark:bg-[#020a13] overflow-hidden border-t border-zinc-100 dark:border-white/5 transition-colors duration-500">
-      
-      {/* Luz ambiente animada - Agora adaptativa */}
-      <motion.div 
-        animate={{ opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 6, repeat: Infinity }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-150 h-100 bg-brand-gold/10 dark:bg-brand-gold/5 blur-[120px] rounded-full pointer-events-none"
-      />
+    <section id="contact" className="py-20 lg:py-32 bg-white border-t border-zinc-100 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        
+        {/* HEADER */}
+        <div className="max-w-2xl mb-16 lg:mb-24">
+          <p className="text-[#ff5500] text-[10px] font-black uppercase tracking-[0.5em] mb-4">
+            Inquiries & Logistics
+          </p>
+          <h2 className="text-4xl md:text-6xl font-[1000] text-zinc-900 uppercase tracking-tighter leading-[0.9]">
+            Quality execution <br />
+            <span className="text-zinc-300 italic">on demand.</span>
+          </h2>
+        </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+        <div className="grid lg:grid-cols-12 gap-16 lg:gap-8 items-start">
           
-          {/* TEXTO PRINCIPAL */}
-          <div className="lg:col-span-6 space-y-10 text-center lg:text-left">
+          {/* CONTENT */}
+          <div className="lg:col-span-7 space-y-12">
             <div className="space-y-6">
-              <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                className="flex items-center justify-center lg:justify-start gap-3 text-brand-gold/80 dark:text-brand-gold/60"
-              >
-                <ShieldCheck size={16} strokeWidth={1.5} />
-                <span className="text-[9px] font-bold uppercase tracking-[0.5em]">Atendimento Exclusivo</span>
-              </motion.div>
-
-              <h2 className="text-5xl md:text-8xl font-light text-zinc-900 dark:text-white leading-[0.9] tracking-tighter uppercase">
-                Sua paz <br />
-                <span className="italic font-serif text-brand-gold lowercase">é inegociável.</span>
-              </h2>
-
-              <p className="text-zinc-600 dark:text-zinc-400 text-base md:text-xl font-light leading-relaxed max-w-lg mx-auto lg:mx-0">
-                Soluções jurídicas estratégicas para proteger o seu patrimônio e a sua tranquilidade na <span className="text-zinc-900 dark:text-white font-medium">Região Metropolitana de POA.</span>
+              <p className="text-zinc-500 text-lg md:text-xl font-medium leading-relaxed max-w-lg">
+                High-end residential and commercial developments. Contact our lead specialist for a technical consultation.
               </p>
-            </div>
-
-            {/* LINKS SOCIAIS */}
-            <div className="flex flex-row lg:flex-col gap-6 lg:gap-8 pt-4 justify-center lg:justify-start">
-              {socialLinks.map((link, i) => (
+              
+              <div className="flex flex-col sm:flex-row gap-4">
                 <a 
-                  key={i} 
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 group"
+                  href="https://wa.me/17185550198" 
+                  className="flex items-center justify-between bg-zinc-900 text-white px-8 py-5 group transition-all hover:bg-[#ff5500] w-full sm:w-auto sm:min-w-[280px]"
                 >
-                  <div className="w-12 h-12 rounded-full border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-500 group-hover:border-brand-gold group-hover:text-brand-gold transition-all duration-500">
-                    {link.icon}
-                  </div>
-                  <div className="text-left hidden lg:block">
-                    <p className="text-[8px] uppercase tracking-widest text-zinc-400 dark:text-zinc-600 font-bold">{link.label}</p>
-                    <p className="text-sm font-light text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">{link.value}</p>
-                  </div>
+                  <span className="text-[11px] font-[1000] uppercase tracking-widest">Chat on WhatsApp</span>
+                  <MessageSquare size={18} strokeWidth={2.5} className="ml-4" />
                 </a>
-              ))}
-            </div>
-          </div>
-
-          {/* CARD DE CONTATO */}
-          <div className="lg:col-span-6 relative">
-            <motion.div 
-              variants={variants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="relative p-px bg-linear-to-b from-zinc-200 to-transparent dark:from-white/10 dark:to-transparent rounded-2xl shadow-xl dark:shadow-none"
-            >
-              <div className="bg-zinc-50 dark:bg-[#030d18]/80 backdrop-blur-md p-8 lg:p-16 rounded-2xl text-zinc-900 dark:text-white overflow-hidden">
                 
-                <div className="relative z-10 space-y-10">
-                  <div className="space-y-4 text-center">
-                    <h3 className="text-2xl md:text-3xl font-serif italic text-zinc-900 dark:text-white">Inicie sua Consultoria</h3>
-                    <div className="h-px w-12 bg-brand-gold/30 mx-auto" />
-                  </div>
+                <a 
+                  href="tel:+17185550198" 
+                  className="flex items-center justify-center border-2 border-zinc-200 text-zinc-900 px-8 py-5 font-[1000] text-[11px] uppercase tracking-widest hover:border-zinc-900 transition-all"
+                >
+                  <Phone size={16} className="mr-3" />
+                  Call Office
+                </a>
+              </div>
+            </div>
 
-                  {/* BOTÃO WHATSAPP */}
-                  <motion.a 
-                    href="https://wa.me/5585988781031" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
-                    className="relative flex items-center justify-between w-full bg-brand-gold text-brand-navy px-6 py-6 lg:py-8 group overflow-hidden rounded-sm"
-                  >
-                    <motion.div 
-                      animate={{ x: ['-100%', '200%'] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent w-full"
-                    />
-                    
-                    <div className="flex items-center gap-4 relative z-10">
-                      <MessageSquare size={24} strokeWidth={1.5} />
-                      <span className="text-xs font-black uppercase tracking-widest">Falar com a Dra. Jéssika</span>
-                    </div>
-                    <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform duration-500 relative z-10" />
-                  </motion.a>
-
-                  <p className="text-center text-[9px] text-zinc-400 dark:text-zinc-600 uppercase tracking-[0.3em]">
-                    Cachoeirinha • Rio Grande do Sul
-                  </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-zinc-100">
+              <div className="space-y-2">
+                <p className="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Email Official</p>
+                <a href="mailto:contact@mastercraft.us" className="text-sm font-bold text-zinc-900 hover:text-[#ff5500] block underline underline-offset-4 decoration-zinc-200 hover:decoration-[#ff5500]">
+                  CONTACT@MASTERCRAFT.US
+                </a>
+              </div>
+              <div className="space-y-2">
+                <p className="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Contractor License</p>
+                <div className="flex items-center gap-2 text-sm font-bold text-zinc-900">
+                  <HardHat size={14} className="text-[#ff5500]" />
+                  <span>NYC-772901-CLASS B</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
+
+          {/* REAL WORKING MAP */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-end w-full">
+            <div className="w-full max-w-[400px] group">
+              <div className="aspect-square bg-zinc-50 border border-zinc-200 relative overflow-hidden shadow-sm">
+                
+                {/* The Actual Iframe */}
+                <iframe
+                  title="Brooklyn HQ Location"
+                  src={mapUrl}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, filter: "grayscale(1) contrast(1.1) brightness(0.9)" }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="grayscale hover:grayscale-0 transition-all duration-700 ease-in-out"
+                />
+                
+                {/* Label Overlay */}
+                <div className="absolute top-4 left-4 right-4 bg-zinc-900 text-white p-4 pointer-events-none sm:top-6 sm:left-6 sm:right-auto">
+                  <p className="text-[8px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-1">HQ Location</p>
+                  <div className="flex items-center gap-2">
+                    <MapPin size={14} className="text-[#ff5500]" />
+                    <span className="text-xs font-black uppercase tracking-tight italic">Brooklyn, NY</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-1">
+                <p className="text-[10px] font-black text-zinc-900 uppercase tracking-widest">55 Water Street, Suite 3A</p>
+                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Brooklyn, NY 11201, USA</p>
+              </div>
+            </div>
+          </div>
+
         </div>
-
-        {/* FOOTER FINAL */}
-        <div className="mt-20 lg:mt-32 pt-12 border-t border-zinc-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="text-center md:text-left">
-            <p className="text-2xl font-light text-zinc-900 dark:text-white uppercase tracking-tighter">
-              Jéssika <span className="font-serif italic text-brand-gold">Mourão</span>
-            </p>
-            <p className="text-[8px] uppercase tracking-[0.5em] text-zinc-400 dark:text-zinc-600 mt-1 italic leading-none">Direito Bancário & Estratégico</p>
-          </div>
-          
-          <div className="flex flex-col items-center gap-1 opacity-50">
-            <MapPin size={14} className="text-brand-gold" />
-            <p className="text-[9px] uppercase tracking-widest text-zinc-500">Cachoeirinha • RS</p>
-          </div>
-
-          <p className="text-[9px] text-zinc-400 dark:text-zinc-700 uppercase tracking-[0.2em] text-center md:text-right">
-            © 2026 • Todos os direitos reservados
-          </p>
-        </div>
-
       </div>
     </section>
   );

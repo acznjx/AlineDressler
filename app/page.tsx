@@ -6,6 +6,7 @@ import { Results } from "@/components/Results";
 import { Faq } from "@/components/Faq";
 import { Contact } from "@/components/Contact";
 import { WhatsappButton } from "@/components/WhatsappButton";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -22,6 +23,8 @@ export default function Home() {
         <Faq />
         
         <Contact />
+
+        <Footer />
       </div>
       
       <WhatsappButton />

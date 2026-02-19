@@ -1,92 +1,86 @@
 "use client";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { Sun, Moon, Instagram, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { Instagram, MessageCircle, Hammer, Facebook } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Navbar() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Correção para evitar o erro de "cascading renders" e hidratação
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [lang, setLang] = useState("EN");
 
   const navLinks = [
-    { name: "Início", href: "#inicio" },
-    { name: "Sobre", href: "#sobre" },
-    { name: "Serviços", href: "#servicos" },
-    { name: "Contato", href: "#contato" },
+    { name: lang === "PT" ? "Serviços" : lang === "ES" ? "Servicios" : "Services", href: "#services" },
+    { name: lang === "PT" ? "Clientes" : lang === "ES" ? "Clientes" : "Clients", href: "#clients" },
+    { name: lang === "PT" ? "Contato" : lang === "ES" ? "Contacto" : "Contact", href: "#contact" },
   ];
 
   return (
-    <header className="absolute top-0 left-0 w-full z-50">
-      <div className="bg-white/80 dark:bg-[#020a13]/90 backdrop-blur-lg h-20 md:h-28 px-4 sm:px-8 md:px-12 lg:px-20 flex items-center justify-between border-b border-black/5 dark:border-white/10 relative transition-all duration-500">
+    <header className="w-full bg-[#18181b] border-b border-white/5 sticky top-0 z-[100] shadow-2xl">
+      <div className="max-w-screen-2xl mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between">
         
-        {/* ESQUERDA: Logo */}
-        <div className="flex flex-col items-start shrink-0 text-left">
-          <h1 className="text-zinc-900 dark:text-white text-base sm:text-lg md:text-2xl font-serif tracking-[0.2em] sm:tracking-[0.4em] uppercase font-light leading-none">
-            Jéssika <span className="font-bold">Mourão</span>
-          </h1>
-          {/* Ajuste sugerido pelo Tailwind v4: max-w-15 */}
-          <div className="h-px w-8 sm:w-full max-w-15 bg-black/10 dark:bg-white/20 my-1.5 md:my-2" />
-          <p className="text-zinc-500 dark:text-white/40 text-[7px] sm:text-[9px] tracking-[0.3em] uppercase">
-            Advocacia Estratégica
-          </p>
-        </div>
-
-        {/* DIREITA: Navegação + Ícones */}
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-10">
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-10">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href} 
-                className="text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-medium text-zinc-600 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors whitespace-nowrap"
-              >
-                {link.name}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3 sm:gap-5 border-l border-black/10 dark:border-white/10 pl-4 sm:pl-8">
-            <a 
-              href="https://www.instagram.com/jessika.mourao.adv/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <Instagram 
-                size={18} 
-                className="text-zinc-500 dark:text-white/60 hover:text-brand-gold transition-colors cursor-pointer shrink-0" 
-              />
+        {/* ESQUERDA: Social, WhatsApp e Idioma (Mantido no lugar) */}
+        <div className="flex items-center gap-4 md:gap-6">
+          <div className="hidden sm:flex items-center gap-4 pr-6 border-r border-white/10">
+            <a href="#" className="text-zinc-400 hover:text-orange-500 transition-all hover:scale-110">
+              <Instagram size={18} />
             </a>
-
-            {/* BOTÃO DE TROCA DE TEMA */}
-            <button 
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")} 
-              className="text-zinc-500 dark:text-white/60 hover:text-brand-gold transition-colors shrink-0 p-1 flex items-center justify-center min-w-8"
-              aria-label="Trocar Tema"
-            >
-              {/* Só renderiza o ícone após o 'mounted' para evitar erro de hidratação */}
-              {mounted ? (
-                theme === "dark" ? <Sun size={18} /> : <Moon size={18} />
-              ) : (
-                <div className="w-[18px] h-[18px]" /> 
-              )}
-            </button>
-
-            <a 
-              href="https://wa.me/5585988781031" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-500 dark:text-white/60 hover:text-[#25D366] transition-colors shrink-0 p-1"
-              aria-label="WhatsApp"
-            >
+            <a href="#" className="text-zinc-400 hover:text-orange-500 transition-all hover:scale-110">
+              <Facebook size={18} />
+            </a>
+            <a href="https://wa.me/" className="text-zinc-400 hover:text-green-500 transition-all hover:scale-110">
               <MessageCircle size={18} />
             </a>
           </div>
+
+          <div className="flex bg-zinc-800/50 p-1 rounded-full border border-white/5 relative h-9 items-center">
+            {["EN", "PT", "ES"].map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`relative px-3 py-1 text-[10px] font-black transition-colors duration-300 z-10 ${
+                  lang === l ? "text-white" : "text-zinc-500 hover:text-zinc-300"
+                }`}
+              >
+                {lang === l && (
+                  <motion.div 
+                    layoutId="activeTabNav"
+                    className="absolute inset-0 bg-orange-600 rounded-full -z-10"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                {l}
+              </button>
+            ))}
+          </div>
         </div>
+
+        {/* LOGO: No mobile vai para o canto direito, no desktop mantém o recuo solicitado */}
+        <div className="flex flex-1 md:flex-initial flex-col items-end md:items-center justify-center shrink-0 md:ml-20">
+          <div className="flex items-center gap-2 md:gap-3">
+            <Hammer size={20} className="text-orange-500" />
+            <h1 className="text-xl md:text-3xl font-black text-white tracking-tighter uppercase italic leading-none">
+              JOHN<span className="text-orange-500">DOE</span>
+            </h1>
+          </div>
+          <span className="text-[7px] md:text-[9px] text-zinc-500 font-bold uppercase tracking-[0.4em] mt-1 whitespace-nowrap">
+            Master Craftsmanship
+          </span>
+        </div>
+
+        {/* DIREITA: Navegação Desktop (Inalterada) */}
+        <div className="hidden xl:flex items-center justify-end ml-10">
+          <nav className="flex items-center gap-10">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href}
+                className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 hover:text-orange-500 transition-all relative group"
+              >
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-600 transition-all group-hover:w-full" />
+              </a>
+            ))}
+          </nav>
+        </div>
+
       </div>
     </header>
   );

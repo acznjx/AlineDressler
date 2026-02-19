@@ -1,104 +1,120 @@
 "use client";
 import { useState } from "react";
-import { Plus, Minus, HelpCircle } from "lucide-react";
+import { Plus, Minus, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const perguntas = [
-  {
-    q: "O que é a revisão de contrato bancário?",
-    a: "É uma análise técnica detalhada das cláusulas do seu contrato para identificar taxas abusivas, juros capitalizados ilegalmente e encargos que ferem o Código de Defesa do Consumidor, visando a redução do saldo devedor."
+const translations = {
+  EN: {
+    badge: "Support",
+    title: "Common",
+    subtitle: "Inquiries.",
+    footer: "Still have questions? Contact us",
+    data: [
+      { q: "What services do you provide?", a: "We specialize in full interior finishing, structural repairs, and master-level home maintenance. Our team utilizes industrial-grade equipment for precision execution." },
+      { q: "Do you provide a warranty?", a: "Every project is backed by a structural guarantee. We build for longevity and compliance with safety standards. Quality is our baseline." },
+      { q: "How do I get a quote?", a: "Submit your project details via WhatsApp or Email. We provide transparent, itemized estimates without hidden fees or overhead surprises." },
+      { q: "What is your service area?", a: "Our primary operations are based in the local area. For large-scale developments, we accept projects across the entire region." }
+    ]
   },
-  {
-    q: "Como impedir a busca e apreensão de veículos?",
-    a: "Através de medidas liminares e defesas estratégicas fundamentadas em irregularidades na notificação ou no contrato, é possível manter a posse do bem enquanto discutimos o equilíbrio financeiro da dívida em juízo."
+  PT: {
+    badge: "Suporte",
+    title: "Dúvidas",
+    subtitle: "Frequentes.",
+    footer: "Ainda tem dúvidas? Entre em contato",
+    data: [
+      { q: "Quais serviços vocês oferecem?", a: "Somos especialistas em acabamento interno completo, reparos estruturais e manutenção residencial de alto padrão. Nossa equipe utiliza equipamentos industriais para execução de precisão." },
+      { q: "Vocês oferecem garantia?", a: "Cada projeto conta com garantia estrutural. Construímos para durabilidade e conformidade com as normas de segurança. Qualidade é nossa base." },
+      { q: "Como solicito um orçamento?", a: "Envie os detalhes do seu projeto via WhatsApp ou E-mail. Fornecemos orçamentos transparentes e detalhados, sem taxas ocultas ou surpresas." },
+      { q: "Qual a área de atendimento?", a: "Nossas operações principais são locais. Para projetos de grande escala, aceitamos serviços em toda a região metropolitana." }
+    ]
   },
-  {
-    q: "A consultoria atende em todo o Brasil?",
-    a: "Sim. Graças à digitalização do sistema jurídico brasileiro, nossa atuação é 100% online, permitindo representar seus interesses em qualquer estado com a mesma eficiência e rigor técnico."
-  },
-  {
-    q: "Quais documentos são necessários para análise?",
-    a: "Inicialmente, precisamos do contrato bancário (ou número do contrato), extratos de pagamento e seus documentos pessoais. Caso não possua o contrato, orientamos como solicitá-lo formalmente à instituição."
+  ES: {
+    badge: "Soporte",
+    title: "Dudas",
+    subtitle: "Comunes.",
+    footer: "¿Aún tienes dudas? Contáctanos",
+    data: [
+      { q: "¿Qué servicios ofrecen?", a: "Nos especializamos en acabados de interiores completos, reparaciones estructurales y mantenimiento del hogar de nivel maestro. Nuestro equipo utiliza equipos de grado industrial." },
+      { q: "¿Ofrecen garantía?", a: "Cada proyecto está respaldado por una garantía estructural. Construimos para la longevidad y el cumplimiento de las normas de seguridad." },
+      { q: "¿Cómo obtengo un presupuesto?", a: "Envíe los detalles de su proyecto por WhatsApp o correo electrónico. Proporcionamos estimaciones transparentes y detalladas sin tarifas ocultas." },
+      { q: "¿Cuál es su área de servicio?", a: "Nuestras operaciones principales son locales. Para desarrollos a gran escala, aceptamos proyectos en toda la región." }
+    ]
   }
-];
+};
 
-export function Faq() {
+export function Faq({ lang = "EN" }: { lang: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const t = translations[lang as keyof typeof translations] || translations.EN;
 
   return (
-    <section id="faq" className="py-20 lg:py-32 bg-white dark:bg-[#020a13] px-6 border-t border-zinc-100 dark:border-white/5 transition-colors duration-500">
-      <div className="max-w-3xl mx-auto">
+    <section id="faq" className="py-16 md:py-32 bg-white border-t border-zinc-100">
+      <div className="max-w-6xl mx-auto px-6">
         
-        {/* CABEÇALHO */}
-        <div className="text-center mb-16 space-y-4">
-          <div className="flex justify-center items-center gap-2 text-brand-gold">
-            <HelpCircle size={16} />
-            <span className="text-[10px] uppercase tracking-[0.4em] font-bold">Consultoria</span>
-          </div>
-          <h2 className="text-4xl md:text-6xl font-light text-zinc-900 dark:text-white uppercase tracking-tight leading-none">
-            Dúvidas <span className="italic font-serif text-brand-gold">Frequentes.</span>
+        {/* HEADER - ALINHADO À ESQUERDA (PADRÃO DO SITE) */}
+        <div className="max-w-2xl mb-12 md:mb-20">
+          <p className="text-[#ff5500] text-[10px] font-black uppercase tracking-[0.5em] mb-4">
+            {t.badge}
+          </p>
+          <h2 className="text-4xl md:text-6xl font-[1000] text-zinc-900 uppercase tracking-tighter leading-[0.9]">
+            {t.title} <br />
+            <span className="text-zinc-300 italic">{t.subtitle}</span>
           </h2>
         </div>
-        
-        {/* LISTA DE ACORDEÃO */}
-        <div className="space-y-4">
-          {perguntas.map((item, i) => (
-            <div 
-              key={i} 
-              className={`transition-all duration-500 border-b ${
-                openIndex === i 
-                  ? "border-brand-gold/50 bg-zinc-50/50 dark:bg-white/2" 
-                  : "border-zinc-100 dark:border-white/10 bg-transparent"
-              }`}
-            >
-              <button 
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full py-7 text-left flex justify-between items-center gap-6"
-              >
-                <span className={`text-sm md:text-base font-bold uppercase tracking-widest transition-colors duration-300 ${
-                  openIndex === i ? "text-brand-gold" : "text-zinc-600 dark:text-zinc-400"
-                }`}>
-                  {item.q}
-                </span>
-                <div className="shrink-0">
-                  {openIndex === i ? (
-                    <Minus size={18} className="text-brand-gold" />
-                  ) : (
-                    <Plus size={18} className="text-zinc-300 dark:text-white/20" />
+
+        {/* FAQ CONTAINER - CENTRALIZADO NA PÁGINA */}
+        <div className="max-w-3xl mx-auto"> 
+          <div className="border-t-2 border-zinc-900">
+            {t.data.map((item, i) => (
+              <div key={i} className="border-b border-zinc-100">
+                <button 
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  className="w-full py-8 md:py-10 text-left flex justify-between items-center gap-6 group transition-all"
+                >
+                  <span className={`text-xl md:text-2xl font-black uppercase tracking-tight transition-colors duration-300 ${
+                    openIndex === i ? "text-[#ff5500]" : "text-zinc-900 group-hover:text-zinc-500"
+                  }`}>
+                    {item.q}
+                  </span>
+                  
+                  <div className={`shrink-0 w-8 h-8 flex items-center justify-center transition-transform duration-500 ${
+                    openIndex === i ? "rotate-0 text-[#ff5500]" : "rotate-90 text-zinc-300 group-hover:text-zinc-900"
+                  }`}>
+                    {openIndex === i ? <Minus size={24} strokeWidth={3} /> : <Plus size={24} strokeWidth={3} />}
+                  </div>
+                </button>
+                
+                <AnimatePresence>
+                  {openIndex === i && (
+                    <motion.div 
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <div className="pb-10">
+                        <p className="text-zinc-500 text-lg md:text-xl font-medium leading-relaxed border-l-4 border-[#ff5500] pl-6">
+                          {item.a}
+                        </p>
+                      </div>
+                    </motion.div>
                   )}
-                </div>
-              </button>
-              
-              <AnimatePresence>
-                {openIndex === i && (
-                  <motion.div 
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                  >
-                    <div className="pb-8 text-zinc-600 dark:text-zinc-500 text-sm md:text-base font-light leading-relaxed italic border-l border-brand-gold/30 ml-1 pl-6">
-                      {item.a}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+
+          {/* FOOTER CALLOUT CENTRALIZADO COM O FAQ */}
+          <div className="mt-16 text-center">
+            <a 
+              href="#contact" 
+              className="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-[#ff5500] transition-colors group"
+            >
+              {t.footer}
+              <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </a>
+          </div>
         </div>
 
-        {/* FOOTER DO FAQ */}
-        <div className="mt-16 text-center">
-          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em]">
-            Necessita de uma análise específica? 
-            <a 
-              href="https://wa.me/5585988781031" 
-              className="ml-3 text-brand-gold border-b border-brand-gold/30 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-900 dark:hover:border-white transition-all pb-1"
-            >
-              Fale com a Dra. Jéssika agora.
-            </a>
-          </p>
-        </div>
       </div>
     </section>
   );

@@ -1,78 +1,145 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck } from "lucide-react"; 
+import { ArrowUpRight, ShieldCheck, Award } from "lucide-react";
 
-export function Hero() {
+interface HeroProps {
+  lang: string;
+}
+
+export function Hero({ lang }: HeroProps) {
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end start"],
+  });
+
+  const xText = useTransform(scrollYProgress, [0, 1], [0, 200]);
+
+  const content = {
+    EN: {
+      tag: "Premium Finishing Expert",
+      h1: ["MAKING", "HOMES", "ICONIC."],
+      p: "Not just a renovation. It's master craftsmanship that values every detail.",
+      btn: "Get a Quote",
+      quality: "Master Quality"
+    },
+    PT: {
+      tag: "Especialista em Acabamento Premium",
+      h1: ["TORNANDO", "CASAS", "ICÔNICAS."],
+      p: "Não é apenas uma reforma. É a execução mestra que valoriza cada detalhe.",
+      btn: "Solicitar Orçamento",
+      quality: "Qualidade Mestra"
+    },
+    ES: {
+      tag: "Especialista en Acabados Premium",
+      h1: ["HACIENDO", "CASAS", "ICÓNICAS."],
+      p: "No es solo una reforma. Es la ejecución maestra que valora cada detalle.",
+      btn: "Solicitar Presupuesto",
+      quality: "Calidad Maestra"
+    }
+  }[lang as "EN" | "PT" | "ES"] || {
+    tag: "Premium Finishing Expert",
+    h1: ["MAKING", "HOMES", "ICONIC."],
+    p: "Not just a renovation. It's master craftsmanship that values every detail.",
+    btn: "Get a Quote",
+    quality: "Master Quality"
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#020a13] transition-colors duration-500">
-      
-      {/* FUNDO: Imagem de Alta Qualidade */}
-      <div className="absolute inset-0 z-0">
-        <Image 
-          src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=2070" 
-          alt="Escritório de Advocacia"
-          fill
-          className="object-cover opacity-20 dark:opacity-30 blur-sm scale-105"
-          priority
-        />
-        {/* Camadas de Gradiente - Atualizadas para Tailwind v4 (linear-to-b/r) */}
-        <div className="absolute inset-0 bg-linear-to-b from-white via-transparent to-white dark:from-[#020a13] dark:to-[#020a13]" />
-        <div className="absolute inset-0 bg-linear-to-r from-white via-transparent to-white dark:from-[#020a13] dark:to-[#020a13]" />
-      </div>
-
-      <div className="max-w-5xl mx-auto w-full px-6 relative z-10 text-center">
-        
-        {/* Linha Decorativa Superior */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col items-center gap-6"
+    <section 
+      ref={targetRef}
+      className="relative min-h-[calc(100svh-5rem)] md:min-h-[calc(100vh-6rem)] flex items-center overflow-hidden bg-[#fafafa]"
+    >
+      {/* TEXTO DE FUNDO GIGANTE (Desktop) */}
+      <div className="absolute inset-0 hidden md:flex items-center justify-center select-none pointer-events-none opacity-[0.08] z-0">
+        <motion.h2 
+          style={{ x: xText }}
+          className="text-[35vw] font-[1000] uppercase italic text-zinc-900 leading-none tracking-tighter"
         >
-          <div className="inline-flex items-center gap-3 px-4 py-1 border border-brand-gold/30 rounded-full bg-brand-gold/5">
-            <ShieldCheck size={14} className="text-brand-gold" />
-            <span className="text-[10px] md:text-[11px] tracking-[0.4em] font-bold uppercase text-brand-gold">
-              Direito Bancário Estratégico
-            </span>
-          </div>
-
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-8xl font-light text-zinc-900 dark:text-white leading-[1.1] tracking-tight">
-              Proteja seu <br /> 
-              <span className="font-serif italic text-brand-gold">Patrimônio</span>
-            </h1>
-            
-            <div className="h-px w-24 bg-brand-gold/40 mx-auto my-8" />
-
-            <p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto italic">
-              &quot;Advocacia de alto impacto para quem busca segurança jurídica e inteligência estratégica contra abusos bancários.&quot;
-            </p>
-          </div>
-
-          {/* Botão de Ação Centralizado */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="pt-10"
-          >
-            <a 
-              href="https://wa.me/5585988781031" 
-              className="group relative inline-flex items-center gap-4 bg-brand-gold text-brand-navy dark:text-brand-navy px-10 py-5 text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:bg-zinc-900 hover:text-white dark:hover:bg-white dark:hover:text-brand-navy hover:shadow-[0_0_40px_rgba(197,165,114,0.4)]"
-            >
-              Agendar Consultoria Especializada
-              <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
-            </a>
-          </motion.div>
-        </motion.div>
+          {lang === "PT" ? "MESTRE" : "CRAFTS"}
+        </motion.h2>
       </div>
 
-      {/* Elementos Visuais de Canto */}
-      <div className="absolute bottom-10 left-10 hidden md:block">
-        <p className="text-zinc-300 dark:text-white/10 text-[10px] tracking-[0.8em] uppercase vertical-text">
-          Exclusividade • Proteção • Estratégia
-        </p>
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
+          
+          {/* LADO ESQUERDO: TEXTO FORTE */}
+          <div className="lg:col-span-7 space-y-8 md:space-y-10 text-center lg:text-left pt-10 md:pt-0">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
+            >
+              <div className="inline-flex items-center gap-2 bg-orange-600 text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-lg shadow-orange-600/20">
+                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                {content.tag}
+              </div>
+
+              <h1 className="text-[15vw] sm:text-[10vw] lg:text-[8vw] font-[1000] text-zinc-900 leading-[0.8] tracking-[-0.05em] uppercase italic">
+                {content.h1[0]} <br />
+                <span className="text-[#ff5500] not-italic">{content.h1[1]}</span> <br />
+                {content.h1[2]}
+              </h1>
+
+              <p className="text-xl md:text-3xl text-zinc-500 font-bold max-w-xl mx-auto lg:mx-0 leading-tight tracking-tight">
+                {content.p}
+              </p>
+            </motion.div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-5 justify-center lg:justify-start">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto bg-[#0a0a0a] text-white px-12 py-7 rounded-2xl flex items-center justify-center gap-4 shadow-[0_20px_40px_rgba(0,0,0,0.2)] font-black uppercase text-sm tracking-widest hover:bg-[#ff5500] transition-all duration-300"
+              >
+                {content.btn}
+                <ArrowUpRight size={24} strokeWidth={3} />
+              </motion.button>
+
+              <div className="hidden sm:flex items-center gap-4 px-6 py-5 bg-white rounded-2xl border-2 border-zinc-100 shadow-xl">
+                <ShieldCheck className="text-[#ff5500]" size={28} />
+                <span className="text-xs font-black text-zinc-900 uppercase tracking-tighter">{content.quality}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* LADO DIREITO: BONECO + SPLASH FORTE (REMOVIDO NO MOBILE PARA PERFORMANCE) */}
+          <div className="hidden lg:col-span-5 relative lg:flex justify-center items-end h-[calc(100vh-6rem)]">
+            
+            {/* SPLASH DE TINTA LARANJA VIBRANTE */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[150%] h-[150%] -z-10">
+                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-[#ff5500] opacity-20">
+                    <path d="M417.5,338Q365,426,268.5,436Q172,446,110.5,366.5Q49,287,100,205Q151,123,248.5,91.5Q346,60,408,155Q470,250,417.5,338Z" />
+                    <circle cx="100" cy="100" r="20" />
+                    <circle cx="400" cy="80" r="15" />
+                    <circle cx="450" cy="400" r="25" />
+                </svg>
+            </div>
+            
+            <div className="relative w-full h-[110%] flex items-end justify-center overflow-visible">
+              <Image 
+                src="https://i.imgur.com/G4aDt2C.png" 
+                alt="Professional"
+                fill
+                className="object-contain object-bottom drop-shadow-[-20px_30px_60px_rgba(0,0,0,0.25)] scale-[1.3] origin-bottom"
+                priority
+                unoptimized
+              />
+
+              <motion.div 
+                animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-1/4 -right-10 bg-[#ff5500] p-5 rounded-3xl shadow-2xl flex flex-col items-center justify-center text-white z-20 border-4 border-white"
+              >
+                <Award size={32} strokeWidth={3} />
+                <span className="text-[12px] font-black uppercase tracking-tighter">100% EXPERT</span>
+              </motion.div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );
