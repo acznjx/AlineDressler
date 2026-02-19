@@ -1,10 +1,16 @@
 "use client";
-import { useState } from "react";
+// Removi o useState daqui, pois agora ele vem do componente pai (page.tsx)
 import { Instagram, MessageCircle, Hammer, Facebook } from "lucide-react";
 import { motion } from "framer-motion";
 
-export function Navbar() {
-  const [lang, setLang] = useState("EN");
+// 1. Definimos o que a Navbar PODE receber
+interface NavbarProps {
+  lang: string;
+  setLang: (l: string) => void;
+}
+
+// 2. Passamos os argumentos para a função
+export function Navbar({ lang, setLang }: NavbarProps) {
 
   const navLinks = [
     { name: lang === "PT" ? "Serviços" : lang === "ES" ? "Servicios" : "Services", href: "#services" },
@@ -16,7 +22,6 @@ export function Navbar() {
     <header className="w-full bg-[#18181b] border-b border-white/5 sticky top-0 z-[100] shadow-2xl">
       <div className="max-w-screen-2xl mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between">
         
-        {/* ESQUERDA: Social, WhatsApp e Idioma (Mantido no lugar) */}
         <div className="flex items-center gap-4 md:gap-6">
           <div className="hidden sm:flex items-center gap-4 pr-6 border-r border-white/10">
             <a href="#" className="text-zinc-400 hover:text-orange-500 transition-all hover:scale-110">
@@ -34,6 +39,7 @@ export function Navbar() {
             {["EN", "PT", "ES"].map((l) => (
               <button
                 key={l}
+                // 3. Aqui ele usa a função que veio do page.tsx
                 onClick={() => setLang(l)}
                 className={`relative px-3 py-1 text-[10px] font-black transition-colors duration-300 z-10 ${
                   lang === l ? "text-white" : "text-zinc-500 hover:text-zinc-300"
@@ -52,7 +58,6 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* LOGO: No mobile vai para o canto direito, no desktop mantém o recuo solicitado */}
         <div className="flex flex-1 md:flex-initial flex-col items-end md:items-center justify-center shrink-0 md:ml-20">
           <div className="flex items-center gap-2 md:gap-3">
             <Hammer size={20} className="text-orange-500" />
@@ -65,7 +70,6 @@ export function Navbar() {
           </span>
         </div>
 
-        {/* DIREITA: Navegação Desktop (Inalterada) */}
         <div className="hidden xl:flex items-center justify-end ml-10">
           <nav className="flex items-center gap-10">
             {navLinks.map((link) => (
