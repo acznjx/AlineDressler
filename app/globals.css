@@ -3,14 +3,20 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-brand-gold: #c5a37d;      
+  /* Cores da Identidade Visual Brutalista */
+  --color-brand-orange: #ff5500;      
+  --color-brand-gold: #ff5500;      
   --color-brand-navy: #0a141f;
   
+  /* Escala de Cinzas Industrial */
   --color-zinc-950: #0a141f;
   --color-zinc-900: #0f1a26;
   --color-zinc-800: #1a2633;
   --color-zinc-400: #94a3b8;
   --color-bg-main: #0a141f;
+
+  /* Espaçamento Customizado (utilizado no md:h-225) */
+  --spacing-225: 900px;
 }
 
 :root {
@@ -32,10 +38,16 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Evita scrolls laterais por causa de animações */
 }
 
+/* Tipografias */
 .font-serif {
   font-family: var(--font-playfair), serif;
+}
+
+.font-sans {
+  font-family: var(--font-inter), sans-serif;
 }
 
 html {
@@ -43,6 +55,7 @@ html {
   background-color: var(--background);
 }
 
+/* Utilitários de Scroll */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -52,7 +65,13 @@ html {
   scrollbar-width: none;
 }
 
+/* Estilização da seleção de texto (Brutalista) */
 ::selection {
-  background-color: #c5a37d;
-  color: #0a141f;
+  background-color: #ff5500; /* Laranja da marca */
+  color: #ffffff;
+}
+
+/* Ajustes de borda para o layout grid */
+.border-t-12 {
+  border-top-width: 12px;
 }

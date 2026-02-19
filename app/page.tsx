@@ -13,7 +13,8 @@ export default function Home() {
   const [lang, setLang] = useState("EN");
 
   return (
-    <main className="relative min-h-screen bg-white dark:bg-[#0a141f] transition-colors duration-500 selection:bg-[#ff5500]/30 selection:text-zinc-900">
+    <main className="relative min-h-screen transition-colors duration-500 selection:bg-brand-gold/30 selection:text-brand-navy dark:selection:text-brand-gold">
+      
       <Navbar lang={lang} setLang={setLang} />
       
       <div className="flex flex-col w-full">
