@@ -1,6 +1,5 @@
 "use client";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowUpRight, ShieldCheck, Award } from "lucide-react";
 
@@ -9,14 +8,6 @@ interface HeroProps {
 }
 
 export function Hero({ lang }: HeroProps) {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start start", "end start"],
-  });
-
-  const xText = useTransform(scrollYProgress, [0, 1], [0, 200]);
-
   const content = {
     EN: {
       tag: "Premium Finishing Expert",
@@ -42,44 +33,32 @@ export function Hero({ lang }: HeroProps) {
   }[lang as "EN" | "PT" | "ES"] || {
     tag: "Premium Finishing Expert",
     h1: ["MAKING", "HOMES", "ICONIC."],
-    p: "Not just a renovation. It's master craftsmanship that values every detail.",
+    p: "Not just a renovation.",
     btn: "Get a Quote",
     quality: "Master Quality"
   };
 
   return (
-    <section 
-      ref={targetRef}
-      className="relative min-h-[calc(100svh-5rem)] md:min-h-[calc(100vh-6rem)] flex items-center overflow-hidden bg-[#fafafa]"
-    >
-      {/* TEXTO DE FUNDO GIGANTE (Desktop) */}
-      <div className="absolute inset-0 hidden md:flex items-center justify-center select-none pointer-events-none opacity-[0.08] z-0">
-        <motion.h2 
-          style={{ x: xText }}
-          className="text-[35vw] font-[1000] uppercase italic text-zinc-900 leading-none tracking-tighter"
-        >
-          {lang === "PT" ? "MESTRE" : "CRAFTS"}
-        </motion.h2>
-      </div>
-
+    <section className="relative min-h-[calc(100svh-5rem)] md:min-h-[calc(100vh-6rem)] flex items-center overflow-hidden bg-[#fafafa]">
+      
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
           
-          {/* LADO ESQUERDO: TEXTO FORTE */}
+          {/* LADO ESQUERDO: TEXTO */}
           <div className="lg:col-span-7 space-y-8 md:space-y-10 text-center lg:text-left pt-10 md:pt-0">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
-              <div className="inline-flex items-center gap-2 bg-orange-600 text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-lg shadow-orange-600/20">
+              <div className="inline-flex items-center gap-2 bg-brand-orange text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-lg shadow-orange-600/20">
                 <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                 {content.tag}
               </div>
 
               <h1 className="text-[15vw] sm:text-[10vw] lg:text-[8vw] font-[1000] text-zinc-900 leading-[0.8] tracking-[-0.05em] uppercase italic">
                 {content.h1[0]} <br />
-                <span className="text-[#ff5500] not-italic">{content.h1[1]}</span> <br />
+                <span className="text-brand-orange not-italic">{content.h1[1]}</span> <br />
                 {content.h1[2]}
               </h1>
 
@@ -92,29 +71,25 @@ export function Hero({ lang }: HeroProps) {
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto bg-[#0a0a0a] text-white px-12 py-7 rounded-2xl flex items-center justify-center gap-4 shadow-[0_20px_40px_rgba(0,0,0,0.2)] font-black uppercase text-sm tracking-widest hover:bg-[#ff5500] transition-all duration-300"
+                className="w-full sm:w-auto bg-[#0a0a0a] text-white px-12 py-7 rounded-2xl flex items-center justify-center gap-4 shadow-[0_20px_40px_rgba(0,0,0,0.2)] font-black uppercase text-sm tracking-widest hover:bg-brand-orange transition-all duration-300"
               >
                 {content.btn}
                 <ArrowUpRight size={24} strokeWidth={3} />
               </motion.button>
 
               <div className="hidden sm:flex items-center gap-4 px-6 py-5 bg-white rounded-2xl border-2 border-zinc-100 shadow-xl">
-                <ShieldCheck className="text-[#ff5500]" size={28} />
+                <ShieldCheck className="text-brand-orange" size={28} />
                 <span className="text-xs font-black text-zinc-900 uppercase tracking-tighter">{content.quality}</span>
               </div>
             </div>
           </div>
 
-          {/* LADO DIREITO: BONECO + SPLASH FORTE (REMOVIDO NO MOBILE PARA PERFORMANCE) */}
+          {/* LADO DIREITO: IMAGEM */}
           <div className="hidden lg:col-span-5 relative lg:flex justify-center items-end h-[calc(100vh-6rem)]">
-            
-            {/* SPLASH DE TINTA LARANJA VIBRANTE */}
+            {/* SPLASH DE TINTA */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[150%] h-[150%] -z-10">
-                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-[#ff5500] opacity-20">
+                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-brand-orange opacity-20">
                     <path d="M417.5,338Q365,426,268.5,436Q172,446,110.5,366.5Q49,287,100,205Q151,123,248.5,91.5Q346,60,408,155Q470,250,417.5,338Z" />
-                    <circle cx="100" cy="100" r="20" />
-                    <circle cx="400" cy="80" r="15" />
-                    <circle cx="450" cy="400" r="25" />
                 </svg>
             </div>
             
@@ -123,15 +98,15 @@ export function Hero({ lang }: HeroProps) {
                 src="https://i.imgur.com/G4aDt2C.png" 
                 alt="Professional"
                 fill
+                unoptimized
                 className="object-contain object-bottom drop-shadow-[-20px_30px_60px_rgba(0,0,0,0.25)] scale-[1.3] origin-bottom"
                 priority
-                unoptimized
               />
 
               <motion.div 
                 animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-1/4 -right-10 bg-[#ff5500] p-5 rounded-3xl shadow-2xl flex flex-col items-center justify-center text-white z-20 border-4 border-white"
+                className="absolute top-1/4 -right-10 bg-brand-orange p-5 rounded-3xl shadow-2xl flex flex-col items-center justify-center text-white z-20 border-4 border-white"
               >
                 <Award size={32} strokeWidth={3} />
                 <span className="text-[12px] font-black uppercase tracking-tighter">100% EXPERT</span>

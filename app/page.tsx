@@ -10,14 +10,17 @@ import { WhatsappButton } from "@/components/WhatsappButton";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
+  // Estado mestre de idioma que controla todo o portfólio
   const [lang, setLang] = useState("EN");
 
   return (
-    <main className="relative min-h-screen transition-colors duration-500 selection:bg-brand-gold/30 selection:text-brand-navy dark:selection:text-brand-gold">
+    <main className="relative min-h-screen transition-colors duration-500 selection:bg-brand-orange selection:text-white dark:selection:bg-brand-orange/30">
       
+      {/* Navbar controla o estado global */}
       <Navbar lang={lang} setLang={setLang} />
       
       <div className="flex flex-col w-full">
+        {/* Seções que respondem à troca de idioma */}
         <Hero lang={lang} />
         
         <About lang={lang} />
@@ -26,11 +29,13 @@ export default function Home() {
         
         <Faq lang={lang} />
         
+        {/* Seções estáticas ou que ainda serão traduzidas */}
         <Contact />
 
         <Footer />
       </div>
       
+      {/* Botão flutuante fixo */}
       <WhatsappButton />
     </main>
   );

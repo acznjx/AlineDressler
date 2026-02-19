@@ -28,17 +28,16 @@ export function About({ lang }: AboutProps) {
     }
   }[lang as "EN" | "PT" | "ES"] || {
     title: "RAW SKILL. NO BS.",
-    p: "I deliver results, not excuses. Master-level finishing and structural integrity in every single project.",
+    p: "I deliver results, not excuses.",
     list: ["Certified Expert", "Master Equipment", "Clean Workspace"],
     cta: "GET STARTED"
   };
 
   return (
-    <section id="about" className="py-20 bg-white text-zinc-900 border-t border-zinc-100">
+    <section id="about" className="py-20 bg-white text-zinc-900 border-t border-zinc-100 overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
-          {/* TEXTO DIRETO E BRUTO */}
           <div className="space-y-8">
             <div className="space-y-2">
               <p className="text-[#ff5500] font-black text-xs uppercase tracking-widest">
@@ -53,7 +52,6 @@ export function About({ lang }: AboutProps) {
               {content.p}
             </p>
 
-            {/* LISTA SIMPLES */}
             <div className="space-y-3">
               {content.list.map((item) => (
                 <div key={item} className="flex items-center gap-3 font-black text-xs uppercase tracking-tight">
@@ -71,12 +69,13 @@ export function About({ lang }: AboutProps) {
             </button>
           </div>
 
-          {/* IMAGEM LIMPA (SOME NO MOBILE) */}
           <div className="hidden lg:block relative aspect-square">
+            {/* Unsplash precisa estar configurado no next.config.mjs ou use uma URL local se der erro de hostname */}
             <Image 
               src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070" 
               alt="Construction site"
               fill
+              unoptimized // Adicionado temporariamente para evitar erros de domínio no build
               className="object-cover grayscale hover:grayscale-0 transition-all duration-500 border-[20px] border-zinc-50"
               priority
             />
