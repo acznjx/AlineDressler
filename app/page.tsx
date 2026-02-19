@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -9,18 +10,20 @@ import { WhatsappButton } from "@/components/WhatsappButton";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
+  const [lang, setLang] = useState("EN");
+
   return (
-    <main className="relative min-h-screen bg-white dark:bg-[#0a141f] transition-colors duration-500 selection:bg-[#c5a37d]/30 selection:text-[#0a141f] dark:selection:text-[#c5a37d]">
-      <Navbar />
+    <main className="relative min-h-screen bg-white dark:bg-[#0a141f] transition-colors duration-500 selection:bg-[#ff5500]/30 selection:text-zinc-900">
+      <Navbar lang={lang} setLang={setLang} />
       
       <div className="flex flex-col w-full">
-        <Hero />
+        <Hero lang={lang} />
         
-        <About />
+        <About lang={lang} />
         
-        <Results />
+        <Results lang={lang} />
         
-        <Faq />
+        <Faq lang={lang} />
         
         <Contact />
 
